@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NY Times</string>
+    <string name="top_stories">Top Stories</string>
+    <string name="loding_top_stories">Loding top stories</string>
+</resources>
