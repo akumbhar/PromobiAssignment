@@ -1,22 +1,18 @@
 package com.promobi.promobiassignment.topstories.model;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.promobi.promobiassignment.network.NYApi;
 import com.promobi.promobiassignment.network.entities.News;
 
+import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * @author Cybage
- */
 public class NetworkLayer {
 
     String API_URL = "https://api.nytimes.com/";
-
-
     NYApi api;
 
     public NetworkLayer() {
@@ -30,15 +26,17 @@ public class NetworkLayer {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build();
 
         api = retrofit.create(NYApi.class);
     }
 
-    public Call<News> getTopStories() {
+    public Observable<News> getTopStories(String apiKey) {
 
-        return api.getTopStories("6dd57d27afbf4a689d74d4e747bfdcfe");
+
+        return api.getTopStories(apiKey);
 
     }
 
